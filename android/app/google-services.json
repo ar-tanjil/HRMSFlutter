@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "177793196453",
+    "project_id": "myappoff",
+    "storage_bucket": "myappoff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177793196453:android:461bbf715e6892fc3dc84c",
+        "android_client_info": {
+          "package_name": "com.example.my_app_office"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApAlRuiLDsoUlAm5a1K15FbAM4PHIcCi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
