@@ -22,7 +22,7 @@ class FirebaseCloudService {
             (doc) => Employee.fromSnapshot(doc),
           ));
 
-  void addNewEmployee({required Employee employee}) async {
+  Future<void> addNewEmployee({required Employee employee}) async {
     await _employee.add({
       empName: employee.name,
       empEmail: employee.email,
@@ -30,6 +30,8 @@ class FirebaseCloudService {
       empDesignation: employee.designation,
       empShift: employee.shift
     });
+
+    return Future.value();
   }
 
   Future<Iterable<Employee>> getEmployeeById({
