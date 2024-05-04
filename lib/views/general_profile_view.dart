@@ -18,9 +18,10 @@ class _OtherProfileViewState extends State<OtherProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 219, 226, 233),
       appBar: AppBar(
         title: const Text("Profile"),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.blueAccent,
       ),
       body: FutureBuilder(
           future: getEmployee(context),

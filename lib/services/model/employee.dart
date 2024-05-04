@@ -8,6 +8,7 @@ class Employee {
   final String department;
   final String designation;
   final String shift;
+  final String role;
 
   Employee({
     required this.id,
@@ -16,6 +17,7 @@ class Employee {
     required this.department,
     required this.designation,
     required this.shift,
+    required this.role,
   });
 
   Employee.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
@@ -24,7 +26,8 @@ class Employee {
         email = snapshot.data()[empEmail],
         department = snapshot.data()[empDepartment],
         designation = snapshot.data()[empDesignation],
-        shift = snapshot.data()[empShift];
+        shift = snapshot.data()[empShift],
+        role = snapshot.data()[empRole];
 
   @override
   String toString() {

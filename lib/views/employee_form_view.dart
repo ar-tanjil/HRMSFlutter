@@ -71,6 +71,7 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
       department: department,
       designation: designation,
       shift: shift,
+      role: "Employee",
     );
 
     if (_edit) {
@@ -86,8 +87,10 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 219, 226, 233),
       appBar: AppBar(
         title: const Text("Employee Registration"),
+        backgroundColor: Colors.blueAccent,
       ),
       body: FutureBuilder(
           future: getEmployee(context),

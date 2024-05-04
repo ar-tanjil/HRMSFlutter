@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_app_office/services/model/employee.dart';
 
 class ProfileAbout extends StatefulWidget {
-  const ProfileAbout({super.key});
+  final Employee employee;
+  const ProfileAbout({super.key, required this.employee});
 
   @override
   State<ProfileAbout> createState() => _ProfileAboutState();
@@ -39,11 +41,11 @@ class _ProfileAboutState extends State<ProfileAbout> {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           "Full Name",
                           style: TextStyle(
@@ -52,7 +54,7 @@ class _ProfileAboutState extends State<ProfileAbout> {
                         ),
                       ),
                       Expanded(
-                        child: Text("Ashiqur Rahaman"),
+                        child: Text(widget.employee.name),
                       ),
                     ],
                   ),
@@ -91,11 +93,11 @@ class _ProfileAboutState extends State<ProfileAbout> {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           "Department",
                           style: TextStyle(
@@ -104,7 +106,7 @@ class _ProfileAboutState extends State<ProfileAbout> {
                         ),
                       ),
                       Expanded(
-                        child: Text("IT"),
+                        child: Text(widget.employee.department),
                       ),
                     ],
                   ),
@@ -118,11 +120,11 @@ class _ProfileAboutState extends State<ProfileAbout> {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           "Designation",
                           style: TextStyle(
@@ -131,7 +133,7 @@ class _ProfileAboutState extends State<ProfileAbout> {
                         ),
                       ),
                       Expanded(
-                        child: Text("Web Devloper"),
+                        child: Text(widget.employee.designation),
                       ),
                     ],
                   ),
@@ -144,11 +146,11 @@ class _ProfileAboutState extends State<ProfileAbout> {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           "Shift",
                           style: TextStyle(
@@ -157,7 +159,7 @@ class _ProfileAboutState extends State<ProfileAbout> {
                         ),
                       ),
                       Expanded(
-                        child: Text("Day"),
+                        child: Text(widget.employee.shift),
                       ),
                     ],
                   ),

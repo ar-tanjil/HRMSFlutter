@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_app_office/dialogs/logout_dialog.dart';
 import 'package:my_app_office/route.dart';
+import 'package:my_app_office/services/auth/auth_service.dart';
 
 class OfficeDrawerList extends StatefulWidget {
   const OfficeDrawerList({super.key});
@@ -16,9 +18,15 @@ class _OfficeDrawerListState extends State<OfficeDrawerList> {
         ListTile(
           leading: const Icon(
             Icons.dashboard,
-            color: Colors.red,
+            color: Colors.blueGrey,
           ),
-          title: const Text('Home'),
+          title: const Text(
+            'Home',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent,
+            ),
+          ),
           onTap: () {
             Navigator.pop(context);
           },
@@ -26,9 +34,15 @@ class _OfficeDrawerListState extends State<OfficeDrawerList> {
         ListTile(
           leading: const Icon(
             Icons.person,
-            color: Colors.red,
+            color: Colors.blueGrey,
           ),
-          title: const Text('Profile'),
+          title: const Text(
+            'Profile',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent,
+            ),
+          ),
           onTap: () {
             Navigator.pushNamed(context, profileRoute);
           },
@@ -36,9 +50,15 @@ class _OfficeDrawerListState extends State<OfficeDrawerList> {
         ListTile(
           leading: const Icon(
             Icons.menu_book,
-            color: Colors.red,
+            color: Colors.blueGrey,
           ),
-          title: const Text('User Guide'),
+          title: const Text(
+            'User Guide',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent,
+            ),
+          ),
           onTap: () {
             Navigator.pop(context);
           },
@@ -46,9 +66,15 @@ class _OfficeDrawerListState extends State<OfficeDrawerList> {
         ListTile(
           leading: const Icon(
             Icons.report,
-            color: Colors.red,
+            color: Colors.blueGrey,
           ),
-          title: const Text('About'),
+          title: const Text(
+            'About',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent,
+            ),
+          ),
           onTap: () {
             Navigator.pop(context);
           },
@@ -56,9 +82,15 @@ class _OfficeDrawerListState extends State<OfficeDrawerList> {
         ListTile(
           leading: const Icon(
             Icons.share,
-            color: Colors.red,
+            color: Colors.blueGrey,
           ),
-          title: const Text('Share'),
+          title: const Text(
+            'Share',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent,
+            ),
+          ),
           onTap: () {
             Navigator.pop(context);
           },
@@ -66,9 +98,15 @@ class _OfficeDrawerListState extends State<OfficeDrawerList> {
         ListTile(
           leading: const Icon(
             Icons.star,
-            color: Colors.red,
+            color: Colors.blueGrey,
           ),
-          title: const Text('Rate Use'),
+          title: const Text(
+            'Rate Use',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent,
+            ),
+          ),
           onTap: () {
             Navigator.pop(context);
           },
@@ -76,11 +114,25 @@ class _OfficeDrawerListState extends State<OfficeDrawerList> {
         ListTile(
           leading: const Icon(
             Icons.logout,
-            color: Colors.red,
+            color: Colors.blueGrey,
           ),
-          title: const Text('Logout'),
-          onTap: () {
-            Navigator.pop(context);
+          title: const Text(
+            'Logout',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent,
+            ),
+          ),
+          onTap: () async {
+            final shouldLogout = await showLogutDialog(context);
+
+            if (shouldLogout) {
+              await AuthService.firebase().logOut();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                loginRoute,
+                (route) => false,
+              );
+            }
           },
         ),
       ],

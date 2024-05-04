@@ -13,11 +13,12 @@ class _ProfileTopState extends State<ProfileTop> {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
           colors: [
+            Colors.blueGrey,
             Colors.blue,
-            Colors.red,
+            Color.fromARGB(255, 114, 156, 229),
           ],
         ),
       ),

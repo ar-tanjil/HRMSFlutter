@@ -24,8 +24,10 @@ class _EmployeeListViewState extends State<EmployeeListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 219, 226, 233),
       appBar: AppBar(
         title: const Text("Employee Directory"),
+        backgroundColor: Colors.blueAccent,
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () {

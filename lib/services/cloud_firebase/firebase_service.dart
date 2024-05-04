@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_app_office/services/cloud_firebase/cloud_constants.dart';
 import 'package:my_app_office/services/cloud_firebase/cloud_storage_execption.dart';
@@ -28,7 +30,8 @@ class FirebaseCloudService {
       empEmail: employee.email,
       empDepartment: employee.department,
       empDesignation: employee.designation,
-      empShift: employee.shift
+      empShift: employee.shift,
+      empRole: employee.role
     });
 
     return Future.value();
@@ -49,6 +52,16 @@ class FirebaseCloudService {
               }));
     } catch (e) {
       throw CouldNotGetAllEmployeeException();
+    }
+  }
+
+  Future<Employee?> getUserByEmail(String email) async {
+    try {
+      return await _employee.where(empEmail, isEqualTo: email).get().then(
+            (value) => Future.value(Employee.fromSnapshot(value.docs.first)),
+          );
+    } catch (e) {
+      return null;
     }
   }
 

@@ -5,11 +5,40 @@ class ApprovalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        Card(child: Text("Leave")),
-        Card(child: Text("Regularization")),
-      ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4.0, 15, 4, 0),
+      child: ListView(
+        children: const [
+          Card(
+              child: ListTile(
+            title: Text(
+              "Leave",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.blue),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.blue,
+            ),
+          )),
+          Card(
+              child: ListTile(
+            title: Text(
+              "Regularization",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.blue),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.blue,
+            ),
+          )),
+        ],
+      ),
     );
   }
 }
