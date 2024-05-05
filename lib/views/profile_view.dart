@@ -33,13 +33,16 @@ class _ProfileState extends State<Profile> {
               if (snapshot.hasData) {
                 final employee = snapshot.data!;
                 return Scaffold(
+                  backgroundColor: const Color.fromARGB(255, 219, 226, 233),
                   appBar: AppBar(
                     backgroundColor: Colors.blueAccent,
                   ),
                   body: SingleChildScrollView(
                     child: Column(
                       children: [
-                        const ProfileTop(),
+                        ProfileTop(
+                          employee: employee,
+                        ),
                         Container(
                           decoration: const BoxDecoration(
                             border: Border(
@@ -54,7 +57,9 @@ class _ProfileState extends State<Profile> {
                         const SizedBox(
                           height: 16,
                         ),
-                        const ProfileContact(),
+                        ProfileContact(
+                          employee: employee,
+                        ),
                       ],
                     ),
                   ),

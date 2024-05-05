@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_app_office/services/model/employee.dart';
 
 class ProfileContact extends StatefulWidget {
-  const ProfileContact({super.key});
+  final Employee employee;
+  const ProfileContact({super.key, required this.employee});
 
   @override
   State<ProfileContact> createState() => _ProfileContactState();
@@ -52,7 +54,7 @@ class _ProfileContactState extends State<ProfileContact> {
                         ),
                       ),
                       Expanded(
-                        child: Text("0172069100"),
+                        child: Text(""),
                       ),
                     ],
                   ),
@@ -65,11 +67,11 @@ class _ProfileContactState extends State<ProfileContact> {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           "Company Email",
                           style: TextStyle(
@@ -78,7 +80,7 @@ class _ProfileContactState extends State<ProfileContact> {
                         ),
                       ),
                       Expanded(
-                        child: Text("ashiq@gmail.com"),
+                        child: Text(widget.employee.email),
                       ),
                     ],
                   ),

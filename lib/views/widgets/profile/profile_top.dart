@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_app_office/services/model/employee.dart';
 
 class ProfileTop extends StatefulWidget {
-  const ProfileTop({super.key});
+  final Employee employee;
+  const ProfileTop({super.key, required this.employee});
 
   @override
   State<ProfileTop> createState() => _ProfileTopState();
@@ -52,11 +54,11 @@ class _ProfileTopState extends State<ProfileTop> {
                     children: [
                       Container(
                         decoration: const BoxDecoration(
-                          color: Colors.black,
+                          color: Color.fromARGB(255, 219, 226, 233),
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage('employees.png'),
+                            image: AssetImage(''),
                           ),
                         ),
                       ),
@@ -81,14 +83,14 @@ class _ProfileTopState extends State<ProfileTop> {
             ],
           ),
           Text(
-            "Ashiqur Rahman",
+            widget.employee.name,
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
-            "Web Devloper",
+            widget.employee.designation,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
