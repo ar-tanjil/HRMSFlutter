@@ -60,7 +60,7 @@ class _OfficeDrawerListState extends State<OfficeDrawerList> {
             ),
           ),
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, addImageView);
           },
         ),
         ListTile(

@@ -26,6 +26,8 @@ class _OfficeViewState extends State<OfficeView> {
         appBar: AppBar(
           title: Text(_navbarPages[_selectedTabIndex].title),
           backgroundColor: Colors.blueAccent,
+          elevation: 2,
+          shadowColor: Colors.blueAccent,
         ),
         body: _navbarPages[_selectedTabIndex].body,
         bottomNavigationBar: SalomonBottomBar(

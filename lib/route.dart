@@ -1,3 +1,4 @@
+import 'package:my_app_office/practise/add_image.dart';
 import 'package:my_app_office/views/employee_form_view.dart';
 import 'package:my_app_office/views/employee_list_view.dart';
 import 'package:my_app_office/views/general_profile_view.dart';
@@ -15,6 +16,8 @@ const employeeFormRoute = "/employeeForm/";
 const loginRoute = "/login/";
 const registarRoute = "/register/";
 const verifyEmailRoute = "/verifyemail/";
+// -------------
+const addImageView = "/addImage/";
 
 final route = {
   innerLandingRoute: (context) => const OfficeView(),
@@ -25,4 +28,5 @@ final route = {
   loginRoute: (context) => const LoginView(),
   verifyEmailRoute: (context) => const VerifyEmailView(),
   registarRoute: (context) => const RegisterView(),
+  addImageView: (context) => const AddImageView(),
 };
