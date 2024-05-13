@@ -23,7 +23,7 @@ class _HomeThirdColumnState extends State<HomeThirdColumn> {
               ),
             ),
             child: const Padding(
-              padding: EdgeInsets.all(4.0),
+              padding: EdgeInsets.all(10.0),
               child: Text(
                 "Attendance Insight",
                 textAlign: TextAlign.left,

@@ -18,9 +18,9 @@ class _HomeSecondColumnState extends State<HomeSecondColumn> {
         const SizedBox(
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.all(4.0),
+            padding: EdgeInsets.all(10.0),
             child: Text(
-              "Ouick Access",
+              "Quick Access",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 20,

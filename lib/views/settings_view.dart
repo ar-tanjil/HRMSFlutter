@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app_office/route.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -46,7 +48,7 @@ class _SettingsViewState extends State<SettingsView> {
             child: ListTile(
               tileColor: Colors.white,
               leading: const Icon(
-                Icons.supervisor_account,
+                Icons.group,
                 color: Colors.blue,
               ),
               title: const Text(
@@ -74,14 +76,64 @@ class _SettingsViewState extends State<SettingsView> {
                 ListTile(
                   tileColor: Colors.white54,
                   leading: const Icon(
-                    Icons.person,
+                    CupertinoIcons.group_solid,
                     size: 18,
                     color: Colors.blue,
                   ),
                   title: const Text(
-                    "Employees",
+                    "All Employee",
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    "Manage employee",
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(employeeListRoute);
+                  },
+                ),
+                ListTile(
+                  tileColor: Colors.white54,
+                  leading: const Icon(
+                    CupertinoIcons.money_dollar,
+                    size: 18,
+                    color: Colors.blue,
+                  ),
+                  title: const Text(
+                    "Salary",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    "Manage salary",
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                  ),
+                  onTap: () {},
+                ),
+                ListTile(
+                  tileColor: Colors.white54,
+                  leading: const Icon(
+                    Icons.person_remove,
+                    size: 18,
+                    color: Colors.blue,
+                  ),
+                  title: const Text(
+                    "Off-boarding",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    "Manage off-boarding",
+                    style: TextStyle(
+                      fontSize: 10,
                     ),
                   ),
                   onTap: () {},
@@ -101,7 +153,7 @@ class _SettingsViewState extends State<SettingsView> {
             child: ListTile(
               tileColor: Colors.white,
               leading: const Icon(
-                Icons.corporate_fare,
+                Icons.apartment,
                 color: Colors.blue,
               ),
               title: const Text(
@@ -131,7 +183,7 @@ class _SettingsViewState extends State<SettingsView> {
                 ListTile(
                   tileColor: Colors.white54,
                   leading: const Icon(
-                    Icons.abc,
+                    CupertinoIcons.building_2_fill,
                     size: 18,
                     color: Colors.blue,
                   ),
@@ -143,6 +195,52 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                   subtitle: const Text(
                     "Manage Department",
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(deparmentListRoute);
+                  },
+                ),
+                ListTile(
+                  tileColor: Colors.white54,
+                  leading: const Icon(
+                    CupertinoIcons.rectangle_stack_person_crop_fill,
+                    size: 18,
+                    color: Colors.blue,
+                  ),
+                  title: const Text(
+                    "Designation",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    "Manage designation",
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(designationListRoute);
+                  },
+                ),
+                ListTile(
+                  tileColor: Colors.white54,
+                  leading: const Icon(
+                    Icons.lock_clock,
+                    size: 18,
+                    color: Colors.blue,
+                  ),
+                  title: const Text(
+                    "Shifts",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    "Manage Shifts",
                     style: TextStyle(
                       fontSize: 10,
                     ),
@@ -164,7 +262,7 @@ class _SettingsViewState extends State<SettingsView> {
             child: ListTile(
               tileColor: Colors.white,
               leading: const Icon(
-                Icons.person_3,
+                Icons.manage_accounts,
                 color: Colors.blue,
               ),
               title: const Text(

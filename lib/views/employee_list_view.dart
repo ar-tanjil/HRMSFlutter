@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app_office/dialogs/delete_dialog.dart';
 import 'package:my_app_office/enum/list_menu.dart';
@@ -26,14 +27,14 @@ class _EmployeeListViewState extends State<EmployeeListView> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 219, 226, 233),
       appBar: AppBar(
-        title: const Text("Employee Directory"),
+        title: const Text("Employee List"),
         backgroundColor: Colors.blueAccent,
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () {
           Navigator.of(context).pushNamed(employeeFormRoute);
         },
-        child: const Icon(Icons.add),
+        child: const Icon(CupertinoIcons.person_add_solid),
       ),
       body: StreamBuilder(
         stream: _employeeService.allEmployee(),

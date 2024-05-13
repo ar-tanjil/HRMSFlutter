@@ -19,66 +19,88 @@ class _CalenderWidgetState extends State<CalenderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-      child: TableCalendar(
-        calendarBuilders: CalendarBuilders(
-          dowBuilder: (context, day) {
-            if (isHoliday(day)) {
-              final text = DateFormat.E().format(day);
-
-              return Center(
-                child: Text(
-                  text,
-                  style: const TextStyle(color: Colors.red),
-                ),
-              );
-            }
-            return null;
-          },
-          markerBuilder: (context, day, event) {
-            if (isHoliday(day)) {
-              return Container(
-                margin: const EdgeInsets.only(top: 20),
-                padding: const EdgeInsets.all(1),
-                child: Container(
-                  // height: 7,
-                  width: 5,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.red),
-                ),
-              );
-            }
-
-            return Container(
-              margin: const EdgeInsets.only(top: 20),
-              padding: const EdgeInsets.all(1),
-              child: Container(
-                // height: 7,
-                width: 5,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.blue,
+    return Card(
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Color.fromARGB(255, 222, 210, 210)),
+              ),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                "Attendance Log",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            );
-          },
-        ),
-        firstDay: DateTime.utc(2010, 10, 16),
-        lastDay: DateTime.utc(2030, 3, 14),
-        focusedDay: _focusedDay,
-        selectedDayPredicate: (day) {
-          return isSameDay(_selectedDay, day);
-        },
-        onPageChanged: (focusedDay) {
-          _focusedDay = focusedDay;
-        },
-        onDaySelected: (selectedDay, focusedDay) {
-          setState(() {
-            _selectedDay = selectedDay;
-            _focusedDay = focusedDay; // update `_focusedDay` here as well
-          });
-        },
+            ),
+          ),
+          TableCalendar(
+            calendarBuilders: CalendarBuilders(
+              dowBuilder: (context, day) {
+                if (isHoliday(day)) {
+                  final text = DateFormat.E().format(day);
+
+                  return Center(
+                    child: Text(
+                      text,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  );
+                }
+                return null;
+              },
+              markerBuilder: (context, day, event) {
+                if (isHoliday(day)) {
+                  return Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.all(1),
+                    child: Container(
+                      // height: 7,
+                      width: 5,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.red),
+                    ),
+                  );
+                }
+
+                return Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.all(1),
+                  child: Container(
+                    // height: 7,
+                    width: 5,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.blue,
+                    ),
+                  ),
+                );
+              },
+            ),
+            firstDay: DateTime.utc(2010, 10, 16),
+            lastDay: DateTime.utc(2030, 3, 14),
+            focusedDay: _focusedDay,
+            selectedDayPredicate: (day) {
+              return isSameDay(_selectedDay, day);
+            },
+            onPageChanged: (focusedDay) {
+              _focusedDay = focusedDay;
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay; // update `_focusedDay` here as well
+              });
+            },
+          ),
+        ],
       ),
     );
   }
