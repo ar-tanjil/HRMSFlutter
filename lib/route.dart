@@ -1,13 +1,13 @@
 import 'package:my_app_office/practise/add_image.dart';
-import 'package:my_app_office/views/employee_form_view.dart';
-import 'package:my_app_office/views/employee_list_view.dart';
 import 'package:my_app_office/views/general_profile_view.dart';
 import 'package:my_app_office/views/inner_landing_view.dart';
 import 'package:my_app_office/views/login_view.dart';
-import 'package:my_app_office/views/organization/deparment_form.dart';
+import 'package:my_app_office/views/organization/deparment_form_view.dart';
 import 'package:my_app_office/views/organization/department_list_view.dart';
-import 'package:my_app_office/views/organization/designation_form.dart';
+import 'package:my_app_office/views/organization/designation_form_view.dart';
 import 'package:my_app_office/views/organization/designation_list_view.dart';
+import 'package:my_app_office/views/organization/employee_form_view.dart';
+import 'package:my_app_office/views/organization/employee_list_view.dart';
 import 'package:my_app_office/views/profile_view.dart';
 import 'package:my_app_office/views/register_view.dart';
 import 'package:my_app_office/views/reports/attendance_view.dart';

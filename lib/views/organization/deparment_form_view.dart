@@ -1,21 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app_office/services/api/model/department.dart';
 
-class DesignationFormView extends StatefulWidget {
-  const DesignationFormView({super.key});
+class DeparmentFormView extends StatefulWidget {
+  const DeparmentFormView({super.key});
 
   @override
-  State<DesignationFormView> createState() => _DesignationFormViewState();
+  State<DeparmentFormView> createState() => _DeparmentFormViewState();
 }
 
-class _DesignationFormViewState extends State<DesignationFormView> {
+class _DeparmentFormViewState extends State<DeparmentFormView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final TextEditingController _name;
-  String? _selectedDepartment;
+  late final TextEditingController _description;
 
   @override
   void initState() {
     _name = TextEditingController();
+    _description = TextEditingController();
     super.initState();
   }
 
@@ -32,7 +33,7 @@ class _DesignationFormViewState extends State<DesignationFormView> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 219, 226, 233),
       appBar: AppBar(
-        title: const Text("Add New Designation"),
+        title: const Text("Add New Department"),
         backgroundColor: Colors.blueAccent,
       ),
       body: SingleChildScrollView(
@@ -57,32 +58,27 @@ class _DesignationFormViewState extends State<DesignationFormView> {
                       },
                       decoration: const InputDecoration(
                         labelText: 'Name',
-                        hintText: 'Enter your Name',
-                        prefixIcon: Icon(Icons.person),
+                        hintText: 'Enter Department Name',
+                        prefixIcon: Icon(Icons.title),
                         border: OutlineInputBorder(),
                       ),
                     ),
                     _gap(),
-                    DropdownButtonFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Select Department',
-                          prefixIcon: Icon(Icons.cabin),
-                          border: OutlineInputBorder(),
-                        ),
-                        // dropdownColor: Colors.blueAccent,
-                        value: _selectedDepartment,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedDepartment = newValue!;
-                          });
-                        },
-                        items: departmentDropdown),
+                    TextFormField(
+                      controller: _description,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                        hintText: 'Enter Department Name',
+                        prefixIcon: Icon(Icons.note),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
                     _gap(),
                     SizedBox(
                       width: double.infinity,
@@ -95,7 +91,7 @@ class _DesignationFormViewState extends State<DesignationFormView> {
                         child: const Padding(
                           padding: EdgeInsets.all(10.0),
                           child: Text(
-                            'Add Employee',
+                            'Add Department',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -103,7 +99,19 @@ class _DesignationFormViewState extends State<DesignationFormView> {
                           ),
                         ),
                         onPressed: () async {
-                          if (_formKey.currentState?.validate() ?? false) {}
+                          if (_formKey.currentState?.validate() ?? false) {
+                            String name = _name.text;
+                            String description = _description.text;
+
+                            Department department = Department(
+                              departmentName: name,
+                              departmentDesc: description,
+                            );
+                            DepartmentService service = DepartmentService();
+                            service.postDepartment(department: department);
+
+                            Navigator.of(context).pop();
+                          }
                         },
                       ),
                     ),

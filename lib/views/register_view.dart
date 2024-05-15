@@ -7,7 +7,7 @@ import 'package:my_app_office/services/auth/auth_exception.dart';
 import 'package:my_app_office/services/auth/auth_service.dart';
 import 'package:my_app_office/services/cloud_firebase/firebase_service.dart';
 import 'package:my_app_office/services/model/employee.dart';
-import 'package:my_app_office/views/employee_form_view.dart';
+import 'package:my_app_office/views/spare/employee_form.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});

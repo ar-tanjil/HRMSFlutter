@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddImageView extends StatefulWidget {
@@ -50,7 +49,7 @@ class _AddImageViewState extends State<AddImageView> {
                   Reference referenceImageToUpload =
                       referenceDirImages.child(uniqueFileName);
                   try {
-                    await referenceImageToUpload.putFile(File(file!.path));
+                    await referenceImageToUpload.putFile(File(file.path));
                     imageUrl = await referenceImageToUpload.getDownloadURL();
                   } catch (e) {}
                 },

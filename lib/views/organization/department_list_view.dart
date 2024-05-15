@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_app_office/dialogs/delete_dialog.dart';
+import 'package:my_app_office/enum/list_menu.dart';
 import 'package:my_app_office/route.dart';
+import 'package:my_app_office/services/api/model/department.dart';
 
 class DepartmentListView extends StatefulWidget {
   const DepartmentListView({super.key});
@@ -9,6 +12,14 @@ class DepartmentListView extends StatefulWidget {
 }
 
 class _DepartmentListViewState extends State<DepartmentListView> {
+  late final DepartmentService depService;
+
+  @override
+  void initState() {
+    depService = DepartmentService();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +33,101 @@ class _DepartmentListViewState extends State<DepartmentListView> {
           Navigator.of(context).pushNamed(departmentFormRoute);
         },
         child: const Icon(Icons.add),
+      ),
+      body: FutureBuilder(
+        future: depService.cacheDepartment(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              return StreamBuilder<List<Department>>(
+                  stream: depService.allDeparment,
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                      case ConnectionState.active:
+                        if (snapshot.hasData) {
+                          var deps = snapshot.data!;
+                          if (deps.isNotEmpty) {
+                            return ListView.builder(
+                              itemCount: deps.length,
+                              itemBuilder: (context, index) {
+                                final department = deps.elementAt(index);
+                                return Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      8.0, 2.0, 8.0, 2.0),
+                                  child: ListTile(
+                                    title: Text(
+                                      department.departmentName ?? "",
+                                      maxLines: 1,
+                                      softWrap: true,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      side: const BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 61, 54, 54),
+                                          width: 0.5),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    trailing: PopupMenuButton<ListMenu>(
+                                      onSelected: (value) async {
+                                        switch (value) {
+                                          case ListMenu.delete:
+                                            final shouldDelete =
+                                                await showDeleteDialog(context);
+
+                                            if (shouldDelete) {
+                                              // _employeeService.deleteNote(id: employee.id);
+                                            }
+
+                                            break;
+                                          case ListMenu.update:
+                                          // Navigator.of(context).pushNamed(
+                                          //   employeeFormRoute,
+                                          //   arguments: employee,
+                                          // );
+                                        }
+                                      },
+                                      itemBuilder: (context) {
+                                        return const [
+                                          PopupMenuItem<ListMenu>(
+                                            value: ListMenu.delete,
+                                            child: Text("Delete"),
+                                          ),
+                                          PopupMenuItem<ListMenu>(
+                                            value: ListMenu.update,
+                                            child: Text("Update"),
+                                          )
+                                        ];
+                                      },
+                                    ),
+                                    onTap: () {
+                                      // Navigator.of(context).pushNamed(otherProfileRoute,
+                                      //     arguments: employee);
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            return Container();
+                          }
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                      default:
+                        return Container();
+                    }
+                  });
+            default:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+          }
+        },
       ),
     );
   }
