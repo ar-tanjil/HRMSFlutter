@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app_office/services/api/model/department.dart';
+import 'package:my_app_office/services/api/model/designation.dart';
 import 'package:my_app_office/services/api/model/employee_api.dart';
 
 class EmployeeFormView extends StatefulWidget {
@@ -14,9 +15,6 @@ class EmployeeFormView extends StatefulWidget {
 class _EmployeeFormViewState extends State<EmployeeFormView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String? _selectedDepartment;
-  String? _selectedDesignation;
-
   late final TextEditingController _firstName;
   late final TextEditingController _lastName;
   late final TextEditingController _city;
@@ -25,6 +23,42 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
   late final TextEditingController _dob;
 
 // --------------------
+
+  int? _selectedDepartment;
+  int? _selectedDesignation;
+
+  late final List<Department> _deparments;
+  late final List<Designation> _designation;
+
+  Future<void> _getAllDep() async {
+    DepartmentService depService = DepartmentService();
+    _deparments = await depService.geAlltDeparments();
+  }
+
+  List<DropdownMenuItem<int>> get departmentDropdown {
+    List<DropdownMenuItem<int>> menuItems = [];
+    for (var dep in _deparments) {
+      DropdownMenuItem<int> item =
+          DropdownMenuItem(value: dep.id, child: Text(dep.departmentName!));
+      menuItems.add(item);
+    }
+    return menuItems;
+  }
+
+  Future<void> _getAllDesignation() async {
+    DesignationService desigService = DesignationService();
+    _designation = await desigService.geAlltDesignation();
+  }
+
+  List<DropdownMenuItem<int>> get designationDropdown {
+    List<DropdownMenuItem<int>> menuItems = [];
+    for (var desig in _designation) {
+      DropdownMenuItem<int> item =
+          DropdownMenuItem(value: desig.id, child: Text(desig.jobTitle!));
+      menuItems.add(item);
+    }
+    return menuItems;
+  }
 
   @override
   void initState() {
@@ -124,7 +158,6 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
                         maxLines: 1,
-                        //initialValue: 'Aseem Wangoo',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Choose Date';
@@ -142,7 +175,6 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
                       TextFormField(
                         controller: _email,
                         validator: (value) {
-                          // add email validation
                           if (value == null || value.isEmpty) {
                             return 'Please enter some text';
                           }
@@ -164,47 +196,103 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
                         ),
                       ),
                       _gap(),
-                      DropdownButtonFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                      FutureBuilder(
+                          future: _getAllDep(),
+                          builder: (context, snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.done:
+                                return DropdownButtonFormField(
+                                    validator: (value) {
+                                      if (value == null) {
+                                        return 'Please enter some text';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: const InputDecoration(
+                                      labelText: 'Select Department',
+                                      prefixIcon: Icon(Icons.cabin),
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    // dropdownColor: Colors.blueAccent,
+                                    value: _selectedDepartment,
+                                    onChanged: (int? newValue) {
+                                      setState(() {
+                                        _selectedDepartment = newValue!;
+                                      });
+                                    },
+                                    items: departmentDropdown);
+                              default:
+                                return DropdownButtonFormField(
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                    labelText: 'Select Department',
+                                    prefixIcon: Icon(Icons.cabin),
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  // dropdownColor: Colors.blueAccent,
+                                  onChanged: (int? newValue) {
+                                    setState(() {
+                                      _selectedDepartment = newValue!;
+                                    });
+                                  },
+                                  items: null,
+                                );
                             }
-                            return null;
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'Select Department',
-                            prefixIcon: Icon(Icons.cabin),
-                            border: OutlineInputBorder(),
-                          ),
-                          // dropdownColor: Colors.blueAccent,
-                          value: _selectedDepartment,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedDepartment = newValue!;
-                            });
-                          },
-                          items: departmentDropdown),
+                          }),
                       _gap(),
-                      DropdownButtonFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                      FutureBuilder(
+                          future: _getAllDesignation(),
+                          builder: (context, snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.done:
+                                return DropdownButtonFormField(
+                                    validator: (value) {
+                                      if (value == null) {
+                                        return 'Please enter some text';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: const InputDecoration(
+                                      labelText: 'Select Designation',
+                                      prefixIcon: Icon(Icons.cabin),
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    // dropdownColor: Colors.blueAccent,
+                                    value: _selectedDesignation,
+                                    onChanged: (int? newValue) {
+                                      setState(() {
+                                        _selectedDesignation = newValue!;
+                                      });
+                                    },
+                                    items: designationDropdown);
+                              default:
+                                return DropdownButtonFormField(
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                    labelText: 'Select Designation',
+                                    prefixIcon: Icon(Icons.cabin),
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  // dropdownColor: Colors.blueAccent,
+                                  onChanged: (int? newValue) {
+                                    setState(() {
+                                      _selectedDepartment = newValue!;
+                                    });
+                                  },
+                                  items: null,
+                                );
                             }
-                            return null;
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'Select Designation',
-                            prefixIcon: Icon(Icons.card_membership),
-                            border: OutlineInputBorder(),
-                          ),
-                          // dropdownColor: Colors.blueAccent,
-                          value: _selectedDesignation,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedDesignation = newValue!;
-                            });
-                          },
-                          items: designationDropdown),
+                          }),
                       _gap(),
                       TextFormField(
                         controller: _city,
@@ -279,6 +367,7 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
                               );
 
                               EmployeeService service = EmployeeService();
+
                               await service.postEmployee(employee: employee);
 
                               Navigator.of(context).pop();
@@ -294,30 +383,4 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
           ),
         ));
   }
-}
-
-List<DropdownMenuItem<String>> get departmentDropdown {
-  List<DropdownMenuItem<String>> menuItems = const [
-    DropdownMenuItem(value: "IT", child: Text("IT")),
-    DropdownMenuItem(value: "HR", child: Text("HR")),
-    DropdownMenuItem(value: "ACCOUNTS", child: Text("ACCOUNTS")),
-  ];
-  return menuItems;
-}
-
-List<DropdownMenuItem<String>> get designationDropdown {
-  List<DropdownMenuItem<String>> menuItems = const [
-    DropdownMenuItem(value: "MANAGER", child: Text("MANAGER")),
-    DropdownMenuItem(value: "SR.OFFICER", child: Text("SR. OFFICER")),
-    DropdownMenuItem(value: "JR.OFFICER", child: Text("JR. OFFICES")),
-  ];
-  return menuItems;
-}
-
-List<DropdownMenuItem<String>> get shiftDropdown {
-  List<DropdownMenuItem<String>> menuItems = const [
-    DropdownMenuItem(value: "FULLTIME", child: Text("FULL TIME")),
-    DropdownMenuItem(value: "PARTTIME", child: Text("PART TIME")),
-  ];
-  return menuItems;
 }

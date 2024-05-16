@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_app_office/services/model/employee.dart';
+import 'package:my_app_office/services/api/model/employee_api.dart';
 import 'package:my_app_office/utils/get_argument.dart';
 
 class OtherProfileView extends StatefulWidget {
@@ -10,8 +10,8 @@ class OtherProfileView extends StatefulWidget {
 }
 
 class _OtherProfileViewState extends State<OtherProfileView> {
-  Future<Employee?> getEmployee(BuildContext context) async {
-    final employee = context.getArgument<Employee>();
+  Future<EmployeeApi?> getEmployee(BuildContext context) async {
+    final employee = context.getArgument<EmployeeApi>();
     return employee;
   }
 
@@ -46,7 +46,7 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
-                                  employee.name,
+                                  "${employee.firstName} ${employee.lastName}",
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
                                     fontSize: 20,
@@ -57,7 +57,7 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
-                                  employee.department,
+                                  employee.departmentName ?? " ",
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
                                     fontSize: 14,
@@ -68,7 +68,7 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
-                                  employee.designation,
+                                  employee.jobTitle ?? " ",
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
                                     fontSize: 10,
@@ -131,7 +131,9 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Text(employee.name),
+                                  child: Text(
+                                    "${employee.firstName} ${employee.lastName}",
+                                  ),
                                 ),
                               ],
                             ),
@@ -183,7 +185,7 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Text(employee.department),
+                                  child: Text(employee.departmentName ?? " "),
                                 ),
                               ],
                             ),
@@ -210,33 +212,7 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Text(employee.designation),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    color: Color.fromARGB(255, 204, 194, 194)),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              children: [
-                                const Expanded(
-                                  child: Text(
-                                    "Shift",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(employee.shift),
+                                  child: Text(employee.jobTitle ?? " "),
                                 ),
                               ],
                             ),
@@ -288,7 +264,7 @@ class _OtherProfileViewState extends State<OtherProfileView> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Text(employee.email),
+                                  child: Text(employee.email ?? ""),
                                 ),
                               ],
                             ),
