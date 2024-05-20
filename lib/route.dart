@@ -8,6 +8,8 @@ import 'package:my_app_office/views/organization/designation_form_view.dart';
 import 'package:my_app_office/views/organization/designation_list_view.dart';
 import 'package:my_app_office/views/organization/employee_form_view.dart';
 import 'package:my_app_office/views/organization/employee_list_view.dart';
+import 'package:my_app_office/views/organization/salary_form_view.dart';
+import 'package:my_app_office/views/organization/salary_list_view.dart';
 import 'package:my_app_office/views/profile_view.dart';
 import 'package:my_app_office/views/register_view.dart';
 import 'package:my_app_office/views/reports/attendance_view.dart';
@@ -28,6 +30,8 @@ const departmentFormRoute = "/departmentForm/";
 const designationFormRoute = "/designationForm/";
 const attendanceRoute = "/attendance/";
 const leaveRoute = "/leave/";
+const salaryListRoute = "/salaryList/";
+const salaryFormRoute = "/salaryForm/";
 // -------------
 const addImageView = "/addImage/";
 
@@ -46,5 +50,7 @@ final route = {
   designationFormRoute: (context) => const DesignationFormView(),
   attendanceRoute: (context) => const AttendanceView(),
   leaveRoute: (context) => const LeaveView(),
+  salaryListRoute: (context) => const SalaryListView(),
+  salaryFormRoute: (context) => const SalaryFormView(),
   addImageView: (context) => const AddImageView(),
 };

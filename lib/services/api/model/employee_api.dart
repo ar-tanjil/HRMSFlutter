@@ -48,10 +48,21 @@ class EmployeeService {
     var response = await http
         .get(Uri.parse(_url), headers: {"Content-Type": "application/json"});
     Iterable l = json.decode(response.body);
-    List<EmployeeApi> departemts =
+    log(l.toString());
+    List<EmployeeApi> employee =
         List<EmployeeApi>.from(l.map((dep) => EmployeeApi.fromJson(dep)));
 
-    return departemts;
+    return employee;
+  }
+
+  Future<List<EmployeeApi>> getAllEmployeeWithoutSalary() async {
+    var response = await http.get(Uri.parse("$_url/without_sal"),
+        headers: {"Content-Type": "application/json"});
+    Iterable l = json.decode(response.body);
+    List<EmployeeApi> employee =
+        List<EmployeeApi>.from(l.map((dep) => EmployeeApi.fromJson(dep)));
+
+    return employee;
   }
 }
 

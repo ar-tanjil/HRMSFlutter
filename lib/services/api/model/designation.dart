@@ -113,10 +113,12 @@ class DesignationService {
   Future<List<Designation>> geAlltDesignation() async {
     var response = await http
         .get(Uri.parse(_url), headers: {"Content-Type": "application/json"});
+
     Iterable l = json.decode(response.body);
-    List<Designation> departemts =
+
+    List<Designation> designation =
         List<Designation>.from(l.map((dep) => Designation.fromJson(dep)));
 
-    return departemts;
+    return designation;
   }
 }

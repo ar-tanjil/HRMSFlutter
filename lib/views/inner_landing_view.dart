@@ -63,7 +63,7 @@ const List<NavbarPage> _navbarPages = [
     body: HomeView(),
   ),
   NavbarPage(
-    title: "Approval",
+    title: "Salary",
     body: ApprovalView(),
   ),
   NavbarPage(

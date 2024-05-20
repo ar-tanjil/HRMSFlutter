@@ -115,7 +115,9 @@ class _SettingsViewState extends State<SettingsView> {
                       fontSize: 10,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed(salaryListRoute);
+                  },
                 ),
                 ListTile(
                   tileColor: Colors.white54,
@@ -308,7 +310,9 @@ class _SettingsViewState extends State<SettingsView> {
                       fontSize: 10,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, profileRoute);
+                  },
                 ),
                 ListTile(
                   tileColor: Colors.white54,
