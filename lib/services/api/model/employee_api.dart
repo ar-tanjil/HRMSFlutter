@@ -169,6 +169,8 @@ class EmployeeApi {
         "lastName": lastName,
         "email": email,
         "phoneNumber": phoneNumber,
+        "hireDate":
+            "${hireDate!.year.toString().padLeft(4, '0')}-${hireDate!.month.toString().padLeft(2, '0')}-${hireDate!.day.toString().padLeft(2, '0')}",
         "dob":
             "${dob!.year.toString().padLeft(4, '0')}-${dob!.month.toString().padLeft(2, '0')}-${dob!.day.toString().padLeft(2, '0')}",
         "jobId": jobId,

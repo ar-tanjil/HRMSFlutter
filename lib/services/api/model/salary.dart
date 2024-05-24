@@ -31,12 +31,12 @@ class SalaryService {
     _salaryStreamController.add(_salary);
   }
 
-  Future<void> postSalalry({required Salary designation}) async {
-    var response = await http.post(Uri.parse(_url),
+  Future<void> postSalalry({required Salary salary}) async {
+    var response = await http.post(Uri.parse("$_url/${salary.employeeId}"),
         headers: {"Content-Type": "application/json"},
-        body: salaryToJson(designation));
+        body: salaryToJson(salary));
     if (response.statusCode < 301) {
-      _salary.add(designation);
+      _salary.add(salary);
       _salaryStreamController.add(_salary);
     }
   }
@@ -60,18 +60,18 @@ Salary salaryFromJson(String str) => Salary.fromJson(json.decode(str));
 String salaryToJson(Salary data) => json.encode(data.toJson());
 
 class Salary {
-  final int? id;
-  final int? basic;
-  final int? medicalAllowance;
-  final int? providentFund;
-  final int? travelAllowance;
-  final int? provident;
-  final int? medical;
-  final int? travel;
-  final int? loan;
-  final int? epf;
-  final int? employeeId;
-  final EmployeeTable? employeeTable;
+  int? id;
+  double? basic;
+  double? medicalAllowance;
+  double? providentFund;
+  double? travelAllowance;
+  double? provident;
+  double? medical;
+  double? travel;
+  double? loan;
+  double? epf;
+  int? employeeId;
+  EmployeeTable? employeeTable;
 
   Salary({
     this.id,
@@ -122,12 +122,12 @@ class Salary {
 }
 
 class EmployeeTable {
-  final int? id;
-  final String? firstName;
-  final String? lastName;
-  final String? email;
-  final String? jobTitle;
-  final String? departmentName;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? jobTitle;
+  String? departmentName;
 
   EmployeeTable({
     this.id,

@@ -27,8 +27,8 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
   int? _selectedDepartment;
   int? _selectedDesignation;
 
-  late final List<Department> _deparments;
-  late final List<Designation> _designation;
+  late List<Department> _deparments;
+  late List<Designation> _designation;
 
   Future<void> _getAllDep() async {
     DepartmentService depService = DepartmentService();
@@ -50,6 +50,11 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
     _designation = await desigService.geAlltDesignation();
   }
 
+  Future<void> _getAllData() async {
+    await _getAllDep();
+    await _getAllDesignation();
+  }
+
   List<DropdownMenuItem<int>> get designationDropdown {
     List<DropdownMenuItem<int>> menuItems = [];
     for (var desig in _designation) {
@@ -68,6 +73,7 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
     _city = TextEditingController();
     _country = TextEditingController();
     _dob = TextEditingController();
+
     super.initState();
   }
 
@@ -89,9 +95,7 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
         firstDate: DateTime(2020),
         lastDate: DateTime(2030));
     if (picked != null) {
-      setState(() {
-        _dob.text = picked.toString();
-      });
+      _dob.text = picked.toString();
     }
   }
 
@@ -105,103 +109,104 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
           title: const Text("Employee Registration"),
           backgroundColor: Colors.blueAccent,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(10.0, 15, 10.0, 0),
-            child: Center(
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextFormField(
-                        controller: _firstName,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'First Name',
-                          hintText: 'Enter your Name',
-                          prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      _gap(),
-                      TextFormField(
-                        controller: _lastName,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Last Name',
-                          hintText: 'Enter your Name',
-                          prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      _gap(),
-                      TextFormField(
-                        keyboardType: TextInputType.phone,
-                        autocorrect: false,
-                        controller: _dob,
-                        onTap: () {
-                          _selectDate();
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        maxLines: 1,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Choose Date';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Date Of Birth',
-                          hintText: 'Enter your Data Birth',
-                          prefixIcon: Icon(Icons.calendar_today),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      _gap(),
-                      TextFormField(
-                        controller: _email,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
+        body: FutureBuilder(
+            future: _getAllData(),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.done:
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10.0, 15, 10.0, 0),
+                      child: Center(
+                        child: Container(
+                          constraints: const BoxConstraints(maxWidth: 400),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextFormField(
+                                  controller: _firstName,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                    labelText: 'First Name',
+                                    hintText: 'Enter your Name',
+                                    prefixIcon: Icon(Icons.person),
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                                _gap(),
+                                TextFormField(
+                                  controller: _lastName,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                    labelText: 'Last Name',
+                                    hintText: 'Enter your Name',
+                                    prefixIcon: Icon(Icons.person),
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                                _gap(),
+                                TextFormField(
+                                  keyboardType: TextInputType.phone,
+                                  autocorrect: false,
+                                  controller: _dob,
+                                  onTap: () {
+                                    _selectDate();
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                  },
+                                  maxLines: 1,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Choose Date';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                    labelText: 'Date Of Birth',
+                                    hintText: 'Enter your Data Birth',
+                                    prefixIcon: Icon(Icons.calendar_today),
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                                _gap(),
+                                TextFormField(
+                                  controller: _email,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
 
-                          bool emailValid = RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value);
-                          if (!emailValid) {
-                            return 'Please enter a valid email';
-                          }
+                                    bool emailValid = RegExp(
+                                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                        .hasMatch(value);
+                                    if (!emailValid) {
+                                      return 'Please enter a valid email';
+                                    }
 
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          hintText: 'Enter your email',
-                          prefixIcon: Icon(Icons.email_outlined),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      _gap(),
-                      FutureBuilder(
-                          future: _getAllDep(),
-                          builder: (context, snapshot) {
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.done:
-                                return DropdownButtonFormField(
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                    labelText: 'Email',
+                                    hintText: 'Enter your email',
+                                    prefixIcon: Icon(Icons.email_outlined),
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                                _gap(),
+                                DropdownButtonFormField(
                                     validator: (value) {
                                       if (value == null) {
                                         return 'Please enter some text';
@@ -216,41 +221,11 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
                                     // dropdownColor: Colors.blueAccent,
                                     value: _selectedDepartment,
                                     onChanged: (int? newValue) {
-                                      setState(() {
-                                        _selectedDepartment = newValue!;
-                                      });
-                                    },
-                                    items: departmentDropdown);
-                              default:
-                                return DropdownButtonFormField(
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'Please enter some text';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: const InputDecoration(
-                                    labelText: 'Select Department',
-                                    prefixIcon: Icon(Icons.cabin),
-                                    border: OutlineInputBorder(),
-                                  ),
-                                  // dropdownColor: Colors.blueAccent,
-                                  onChanged: (int? newValue) {
-                                    setState(() {
                                       _selectedDepartment = newValue!;
-                                    });
-                                  },
-                                  items: null,
-                                );
-                            }
-                          }),
-                      _gap(),
-                      FutureBuilder(
-                          future: _getAllDesignation(),
-                          builder: (context, snapshot) {
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.done:
-                                return DropdownButtonFormField(
+                                    },
+                                    items: departmentDropdown),
+                                _gap(),
+                                DropdownButtonFormField(
                                     validator: (value) {
                                       if (value == null) {
                                         return 'Please enter some text';
@@ -265,122 +240,110 @@ class _EmployeeFormViewState extends State<EmployeeFormView> {
                                     // dropdownColor: Colors.blueAccent,
                                     value: _selectedDesignation,
                                     onChanged: (int? newValue) {
-                                      setState(() {
-                                        _selectedDesignation = newValue!;
-                                      });
+                                      _selectedDesignation = newValue!;
                                     },
-                                    items: designationDropdown);
-                              default:
-                                return DropdownButtonFormField(
+                                    items: designationDropdown),
+                                _gap(),
+                                TextFormField(
+                                  controller: _city,
                                   validator: (value) {
-                                    if (value == null) {
+                                    if (value == null || value.isEmpty) {
                                       return 'Please enter some text';
                                     }
                                     return null;
                                   },
                                   decoration: const InputDecoration(
-                                    labelText: 'Select Designation',
-                                    prefixIcon: Icon(Icons.cabin),
+                                    labelText: 'City',
+                                    hintText: 'Enter your City',
+                                    prefixIcon: Icon(Icons.person),
                                     border: OutlineInputBorder(),
                                   ),
-                                  // dropdownColor: Colors.blueAccent,
-                                  onChanged: (int? newValue) {
-                                    setState(() {
-                                      _selectedDepartment = newValue!;
-                                    });
+                                ),
+                                _gap(),
+                                TextFormField(
+                                  controller: _country,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
                                   },
-                                  items: null,
-                                );
-                            }
-                          }),
-                      _gap(),
-                      TextFormField(
-                        controller: _city,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'City',
-                          hintText: 'Enter your City',
-                          prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      _gap(),
-                      TextFormField(
-                        controller: _country,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Country',
-                          hintText: 'Enter your Country',
-                          prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      _gap(),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
+                                  decoration: const InputDecoration(
+                                    labelText: 'Country',
+                                    hintText: 'Enter your Country',
+                                    prefixIcon: Icon(Icons.person),
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                                _gap(),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Text(
+                                        'Add Employee',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      if (_formKey.currentState?.validate() ??
+                                          false) {
+                                        String firstName = _firstName.text;
+                                        String lastName = _lastName.text;
+                                        String email = _email.text;
+                                        DateTime dob =
+                                            DateTime.parse(_dob.text);
+                                        int designationId = 1;
+                                        int departmentId = 1;
+                                        String city = _city.text;
+                                        String country = _country.text;
+                                        DateTime hireDate = DateTime.now();
+
+                                        EmployeeApi employee = EmployeeApi(
+                                          firstName: firstName,
+                                          lastName: lastName,
+                                          email: email,
+                                          dob: dob,
+                                          departmentId: departmentId,
+                                          hireDate: hireDate,
+                                          jobId: designationId,
+                                          city: city,
+                                          country: country,
+                                        );
+
+                                        EmployeeService service =
+                                            EmployeeService();
+
+                                        await service.postEmployee(
+                                            employee: employee);
+
+                                        Navigator.of(context).pop();
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Text(
-                              'Add Employee',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          onPressed: () async {
-                            if (_formKey.currentState?.validate() ?? false) {
-                              String firstName = _firstName.text;
-                              String lastName = _lastName.text;
-                              String email = _email.text;
-                              DateTime dob = DateTime.parse(_dob.text);
-                              int designationId = 1;
-                              int departmentId = 1;
-                              String city = _city.text;
-                              String country = _country.text;
-
-                              EmployeeApi employee = EmployeeApi(
-                                firstName: firstName,
-                                lastName: lastName,
-                                email: email,
-                                dob: dob,
-                                departmentId: departmentId,
-                                jobId: designationId,
-                                city: city,
-                                country: country,
-                              );
-
-                              EmployeeService service = EmployeeService();
-
-                              await service.postEmployee(employee: employee);
-
-                              Navigator.of(context).pop();
-                            }
-                          },
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ));
+                    ),
+                  );
+
+                default:
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+              }
+            }));
   }
 }
